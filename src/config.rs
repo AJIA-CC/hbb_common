@@ -1817,10 +1817,10 @@ pub struct LocalConfig {
 
 impl LocalConfig {
     fn load() -> LocalConfig {
-    let mut config = Config::load_::("_local");
-    if config.options.get("enable-check-update").map(|v| v.as_str()) != Some("N") {
-    config.options.insert("enable-check-update".to_string(), "N".to_string());
-    config.store();
+	    let mut config = Config::load_::("_local");
+	    if config.options.get("enable-check-update").map(|v| v.as_str()) != Some("N") {
+	    config.options.insert("enable-check-update".to_string(), "N".to_string());
+	    config.store();
     }
     config
 
