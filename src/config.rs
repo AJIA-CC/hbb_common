@@ -109,8 +109,8 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
-pub const PUBLIC_RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+pub const RENDEZVOUS_SERVERS: &[&str] = &["192.168.192.51"];
+pub const PUBLIC_RS_PUB_KEY: &str = "ugeuTYVkHKXEEQPA29tthYyMgnVNk0X+p7KSoQ3PgP0=”;
 pub const RS_PUB_KEY: &str = match option_env!("RS_PUB_KEY") {
     Some(key) if !key.is_empty() => key,
     _ => PUBLIC_RS_PUB_KEY,
@@ -1817,8 +1817,12 @@ pub struct LocalConfig {
 
 impl LocalConfig {
     fn load() -> LocalConfig {
-        Config::load_::<LocalConfig>("_local")
+    let mut config = Config::load_::("_local");
+    if config.options.get("enable-check-update").map(|v| v.as_str()) != Some("N") {
+    config.options.insert("enable-check-update".to_string(), "N".to_string());
+    config.store();
     }
+    config
 
     fn store(&self) {
         Config::store_(self, "_local");
